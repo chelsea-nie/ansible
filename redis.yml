@@ -1,0 +1,44 @@
+---
+- name: install redis 
+  hosts: sbc 
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+   - name: copy redis
+     copy: src=/tmp/redis-3.0.7.tar.gz dest=/tmp
+
+   - name: tar redis
+     shell: tar zxvf /tmp/redis-3.0.7.tar.gz -C /opt/ 
+
+   - name: wait
+     wait_for: path=/opt/redis-3.0.7 state=present
+
+   - name: start
+     shell: chdir=/opt/redis-3.0.7 make MALLOC=libc
+
+   - name: useradd redisU
+     shell: useradd -g caiex redisU
+
+   - name: chown redis
+     shell: chdir=/opt chown -R redisU.caiex  redis-3.0.7
+
+#   - name: script systemd
+#     copy: src=/lib/systemd/system/redis.service dest=/tmp
+
+#   - name: systemd
+#     shell: cp /tmp/redis.service /lib/systemd/system/
+
+#   - name: systemd
+#     shell: systemctl daemon-reload
+
+#   - name: limits of authority
+#     file: path=/opt/logs state=directory group=caiex  mode="g+w"
+
+#   - name: service redis
+#     service: name=redis pattern=/opt/rclocal/redis_upstart.sh  state=started
+   - name: redis-sentinel
+     shell: cp -r /opt/CONF/redis-sentinel/* /opt/redis-3.0.7/
+
+
+

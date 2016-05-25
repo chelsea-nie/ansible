@@ -1,0 +1,31 @@
+---
+- hosts: test
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+  - name: copy
+    copy: src=/tmp/consumer.zip dest=/tmp
+
+  - name: unzip
+    shell: unzip /tmp/consumer.zip -d /opt
+ 
+#  - name: script systemd
+#    copy: src=/lib/systemd/system/consumer.service dest=/tmp
+
+#  - name: systemd
+#    shell: cp /tmp/consumer.service /lib/systemd/system/
+
+#  - name: systemd
+#    shell: systemctl daemon-reload
+  - name: init configure
+    shell: cp /opt/CONF/consumer/config.properties /opt/consumer/
+
+  - name: systemd
+    shell: cp /opt/CONF/service/consumer.service /lib/systemd/system/
+
+  - name: systemd
+    shell: systemctl daemon-reload
+
+  - name: service consumer
+    service: name=consumer pattern=/opt/rclocal/consumer_upstart.sh  state=started

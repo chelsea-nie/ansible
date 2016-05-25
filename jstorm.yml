@@ -1,0 +1,14 @@
+---
+- hosts: test
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+  - name: scp
+    copy: src=/tmp/jstorm-2.1.1.zip dest=/tmp
+
+  - name: unzip
+    shell: unzip /tmp/jstorm-2.1.1.zip -d /opt
+
+  - name: config
+    shell: cp /opt/CONF/jstorm/storm.yaml /opt/jstorm-2.1.1/conf/

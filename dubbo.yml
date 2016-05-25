@@ -1,0 +1,26 @@
+---
+- hosts: sbc 
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+  - name: copy
+    copy: src=/tmp/dubbo.zip dest=/tmp
+
+  - name: unzip
+    shell: unzip /tmp/dubbo.zip -d /opt
+#service 文件方法1 
+#  - name: script systemd
+#    copy: src=/lib/systemd/system/dubbo.service dest=/tmp
+
+#  - name: systemd
+#    shell: cp /tmp/dubbo.service /lib/systemd/system/
+#service文件方法2
+  - name: systemd
+    shell: cp /opt/CONF/service/dubbo.service /lib/systemd/system/
+
+  - name: systemd
+    shell: systemctl daemon-reload
+
+  - name: service dubbo
+    service: name=dubbo pattern=/opt/rclocal/dubbo_upstart.sh  state=started

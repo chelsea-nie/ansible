@@ -1,0 +1,26 @@
+---
+- hosts: test
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+  - name: copy jdk
+    copy: src=/opt/jdk-7u80-linux-x64.tar.gz dest=/tmp
+
+#  - name: copy tomcat
+#    copy: src=/opt/apache-tomcat-7.0.63.tar.gz dest=/tmp
+
+#  - name: zookeeper
+#    copy: src=/opt/zookeeper-3.4.6.tar.gz dest=/tmp
+
+#  - name: dubbo
+#    copy: src=/opt/dubbo dest=/tmp
+
+#  - name: redis
+#    copy: src=/opt/redis-3.0.7.tar.gz dest=/tmp
+
+#  - name: consumer
+#    copy: src=/opt/consumer dest=/tmp
+
+#  - name: jstorm
+#    copy: src=/opt/jstorm-2.1.0.tar.bz2 dest=/tmp

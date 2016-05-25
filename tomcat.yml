@@ -1,0 +1,36 @@
+---
+- name: install tomcat
+  hosts: sbc 
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+#   - name: copy tomcat
+#     copy: src=/tmp/apache-tomcat-7.0.63.tar.gz dest=/tmp
+
+   - name: tar tomcat
+     shell: tar zxvf /tmp/apache-tomcat-7.0.63.tar.gz -C /opt/
+
+   - name: useradd tomcatU
+     shell: useradd -g caiex tomcatU
+
+   - name: chown tomcat
+     shell: chdir=/opt chown -R tomcatU.caiex  apache-tomcat-7.0.63 
+#service 文件方法1
+#   - name: scripti systemd
+#     copy: src=/lib/systemd/system/tomcat.service dest=/tmp
+
+#   - name: systemd
+#     shell: cp /tmp/tomcat.service /lib/systemd/system/
+#service 文件方法2  
+#   - name: systemd
+#     shell: cp /opt/CONF/service/tomcat.service /lib/systemd/system/
+
+#   - name: systemd
+#     shell: systemctl daemon-reload
+
+   - name: limits of authority
+     file: path=/opt/logs state=directory group=caiex  mode="g+w"
+
+   - name: service tomcat
+     service: name=tomcat pattern=/opt/rclocal/tomcat_upstart.sh  state=started

@@ -1,0 +1,30 @@
+---
+- hosts: sbc 
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+  - name: copy
+    copy: src=/tmp/zookeeper-3.4.6.tar.gz dest=/tmp
+
+  - name: tar
+    shell: tar zxvf /tmp/zookeeper-3.4.6.tar.gz -C /opt
+
+  - name: change configuration files
+    shell: cp /opt/CONF/zoo/zoo.cfg /opt/zookeeper-3.4.6/conf
+ 
+  - name: change dir
+    shell: chdir=/opt/zookeeper-3.4.6 mkdir tmp && chown -R caiex.caiex /opt/zookeeper-3.4.6/tmp && echo "2" >> /opt/zookeeper-3.4.6/tmp/myid 
+
+  - name: mk logs
+#    shell: chdir=/opt/zookeeper-3.4.6 mkdir logs && chown -R caiex.caiex /opt/zookeeper-3.4.6/logs
+    file: path=/opt/zookeeper-3.4.6/logs state=directory group=caiex  mode="g+w"   
+
+  - name: syst
+    shell: cp /opt/CONF/service/zookeeper.service /lib/systemd/system/
+
+  - name: systemd
+    shell: systemctl daemon-reload
+
+  - name: start
+    service: name=zookeeper pattern=/opt/rclocal/zookeeper_upstart.sh  state=started

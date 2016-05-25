@@ -1,0 +1,31 @@
+- hosts: test
+  remote_user: caiex 
+  sudo: yes
+
+  tasks:
+#  - name: cp
+#    shell: cp /opt/apache-tomcat-7.0.63/webapps/oltp-api/WEB-INF/classes/dubbo.properties /opt/CONF/oltp-api
+
+#  - name: rm oltp-api
+#    shell: chdir=/opt/apache-tomcat-7.0.63/webapps/ rm -rf oltp-api*
+
+#  - name: copy war
+#    copy: src=/opt/apache-tomcat-7.0.63/webapps/oltp-api.war dest=/tmp
+
+  - name: copy war
+    copy: src=/tmp/oltp-api.war dest=/tmp/
+
+  - name: sleep for a while
+    shell: sleep 10
+
+  - name: copy config
+    shell: mv /tmp/oltp-api.war /opt/apache-tomcat-7.0.63/webapps/
+
+  - wait_for: path=/opt/apache-tomcat-7.0.63/webapps/oltp-api/WEB-INF/classes/conf/dubbo-context.xml state=present
+
+  - name: cp
+    shell: chdir=/opt/CONF/oltp-api cp dubbo-context.xml /opt/apache-tomcat-7.0.63/webapps/oltp-api/WEB-INF/classes/conf/
+
+  - name: restart tomcat
+    service: name=tomcat state=restarted sleep=5
+
