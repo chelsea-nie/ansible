@@ -1,0 +1,4 @@
+---
+
+hadoop_package: hadoop-2.7.1.tar.gz
+hadoop_dir: hadoop-2.7.1

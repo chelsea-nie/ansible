@@ -1,0 +1,22 @@
+---
+   
+  - name: send hadoop-x.x.x.tar.gz to target and unpack archive
+    unarchive: src={{ hadoop_package }} dest=/opt/ copy=yes
+
+  - name: creat tmp in $HADOOP_HOME
+    file: path=/opt/{{ hadoop_dir }}/tmp state=directory
+
+  - name: configure core-site.xml
+    template: src=core-site.xml.j2 dest=/opt/{{ hadoop_dir }}/etc/hadoop/core-site.xml
+
+  - name: configure hdfs-site.xml
+    template: src=hdfs-site.xml.j2 dest=/opt/{{ hadoop_dir }}/etc/hadoop/hdfs-site.xml
+
+  - name: configure mapred-site.xml
+    template: src=mapred-site.xml.j2 dest=/opt/{{ hadoop_dir }}/etc/hadoop/mapred-site.xml
+
+  - name: configure slaves
+    template: src=slaves.j2 dest=/opt/{{ hadoop_dir }}/etc/hadoop/slaves
+
+  - name: configure yarn-site.xml
+    template: src=yarn-site.xml.j2 dest=/opt/{{ hadoop_dir }}/etc/hadoop/yarn-site.xml

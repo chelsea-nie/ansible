@@ -1,0 +1,8 @@
+---
+  - name: deploy SingleNode HDFS
+    hosts: all
+    remote_user: caiex
+    sudo: yes
+    
+    roles:
+      - single
