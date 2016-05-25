@@ -1,0 +1,29 @@
+---
+- hosts: dubbo
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+#  - name: rm lib
+#    shell: chdir=/opt/dubbo rm -rf lib
+#
+#  - name: copy lib/
+#    copy: src=/opt/dubbo/lib dest=/tmp
+#
+#  - name: copy lib
+#    shell: mv /tmp/lib /opt/dubbo/
+#
+#  - name: copy oltp-service-dubbo-1.0-SNAPSHOT.jar
+#    copy: src=/opt/dubbo/oltp-service-dubbo-1.0-SNAPSHOT.jar dest=/tmp
+  - name: copy oltp-service-dubbo-1.0-SNAPSHOT.jar
+    copy: src=/tmp/oltp-service-dubbo-1.0-SNAPSHOT.jar dest=/tmp
+
+  - name: copy oltp-service-dubbo-1.0-SNAPSHOT.jar
+    shell: cp /tmp/oltp-service-dubbo-1.0-SNAPSHOT.jar /opt/dubbo/
+
+  - name: sleep for a while
+    shell: sleep 10
+
+  - name: service dubbo
+    service: name=dubbo state=restarted sleep=5
+

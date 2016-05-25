@@ -1,0 +1,103 @@
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+# Ex 1: Ungrouped hosts, specify before any group headers.
+[cross]
+10.174.11.72
+
+[test]
+#cloud 1
+#10.44.145.31 
+#ansible_ssh_use=caiex ansible_ssh_pass=caiyi201S 
+#cloud 2
+#10.44.62.104
+#10.44.171.14
+#10.174.11.28
+
+[all]
+10.174.11.72
+10.174.11.76
+10.174.11.28
+10.44.171.14
+10.44.62.104
+10.44.145.31
+
+
+[sbc]
+#10.174.11.72
+10.174.11.76
+
+[sbcconsumer]
+10.174.11.72
+10.174.11.76
+
+[spider-web]
+10.174.11.72
+10.174.11.76
+# old aliyun
+10.171.127.205
+
+[dubbo]
+10.174.11.72
+10.174.11.76
+10.174.11.28
+#10.44.171.14
+#10.44.62.104
+#10.44.145.31
+
+[consumer]
+10.174.11.28
+10.44.171.14
+10.44.62.104
+10.44.145.31
+
+[oltp-api]
+10.174.11.28
+10.44.171.14
+10.44.62.104
+10.44.145.31
+
+
+[SbcOps]
+10.174.11.72
+
+
+#green.example.com
+#blue.example.com
+#192.168.100.1
+#192.168.100.10
+#
+## Ex 2: A collection of hosts belonging to the 'webservers' group
+#
+#[webservers]
+#alpha.example.org
+#beta.example.org
+#192.168.1.100
+#192.168.1.110
+#
+## If you have multiple hosts following a pattern you can specify
+## them like this:
+#
+#www[001:006].example.com
+#
+## Ex 3: A collection of database servers in the 'dbservers' group
+#
+#[dbservers]
+#
+#db01.intranet.mydomain.net
+#db02.intranet.mydomain.net
+#10.25.1.56
+#10.25.1.57
+#
+## Here's another example of host ranges, this time there are no
+## leading 0s:
+#
+#db-[99:101]-node.example.com
+

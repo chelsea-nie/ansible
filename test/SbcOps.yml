@@ -1,0 +1,8 @@
+- hosts: SbcOps
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+  - name: github /opt/SbcOps
+    shell: chdir=/opt/SbcOps git pull
+

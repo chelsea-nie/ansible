@@ -1,0 +1,9 @@
+- hosts: all
+  remote_user: caiex
+  sudo: yes
+  gather_facts: false
+
+  tasks:
+  - name: github crossz/rclocal
+    shell: chdir=/opt/rclocal git pull
+

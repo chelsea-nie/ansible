@@ -1,0 +1,26 @@
+---
+- hosts: sbcconsumer
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+  - name: rm lib
+    shell: chdir=/opt/sbcconsumer rm -rf lib
+
+  - name: copy lib/
+    copy: src=/opt/sbcconsumer/lib dest=/tmp
+
+  - name: copy lib
+    shell: mv /tmp/lib /opt/sbcconsumer/
+
+  - name: copy SBC-0.0.1-SNAPSHOT.jar 
+    copy: src=/opt/sbcconsumer/SBC-MAT-1.0.jar dest=/tmp
+
+  - name: copy SBC-0.0.1-SNAPSHOT.jar 
+    shell: mv /tmp/SBC-MAT-1.0.jar /opt/sbcconsumer/
+
+  - name: sleep for a while
+    shell: sleep 10
+
+  - name: service sbcconsumer 
+    service: name=sbcconsumer state=restarted sleep=5

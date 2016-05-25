@@ -1,0 +1,23 @@
+---
+- hosts: consumer
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+#  - name: copy consumer
+#    copy: src=/opt/consumer/oltp-service-consumer-1.0-SNAPSHOT.jar dest=/tmp
+  - name: copy consumer
+    copy: src=/tmp/oltp-service-consumer-1.0-SNAPSHOT.jar dest=/tmp
+
+  - name: sleep
+    shell: sleep 10
+
+  - name: go on
+    shell: mv /tmp/oltp-service-consumer-1.0-SNAPSHOT.jar /opt/consumer/
+
+  - name: sleep
+    shell: sleep 10
+
+  - name: service consumer
+    service: name=consumer state=restarted sleep=5
+

@@ -1,0 +1,28 @@
+- hosts: cross
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+  - name: rm SBC
+    shell: chdir=/opt/apache-tomcat-7.0.63/webapps/ rm -rf SBC*
+
+# 1.4 put on ,you can stop thie
+  - name: copy war
+    copy: src=/opt/apache-tomcat-7.0.63/webapps/SBC.war dest=/tmp
+
+  - name: copy SBC
+    shell: cp /tmp/SBC.war /opt/apache-tomcat-7.0.63/webapps/
+
+  - name: sleep for a while
+    shell: sleep 10
+
+  - name: cp
+    shell: chdir=/opt/CONF/SBC cp jdbc.properties /opt/apache-tomcat-7.0.63/webapps/SBC/WEB-INF/classes/
+
+  - name: sleep for a while
+    shell: sleep 5
+#  - name: restart tomcat
+#    service: name=tomcat state=restarted sleep=5
+
+#  - name: restart tomcat
+#    shell: systemctl restart tomcat

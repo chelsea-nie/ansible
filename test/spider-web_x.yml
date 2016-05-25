@@ -1,0 +1,26 @@
+---
+- hosts: spider-web 
+  remote_user: caiex
+  sudo: yes
+#  gather_facts: false
+
+  tasks:
+
+  - name: Download from OSS, this is only for could6
+    shell: python /etc/ansible/aliyunOss-spider-web.py
+    when: ansible_eth0.ipv4.address == '10.174.11.72'
+
+  - name: upload spider-web.war
+    copy: src=/tmp/spider-web.test dest=/tmp
+
+  - debug: var=ansible_eth0.ipv4.address
+
+  - name: copy to target path
+    shell: cp /tmp/spider-web.test /opt/spider/
+    when: ansible_eth0.ipv4.address=="10.174.11.72"
+
+#  - name: sleep for 5s
+#    shell: sleep 5
+
+#  - name: service spider-web restart
+#    service: name=spider-web state=restarted sleep=5

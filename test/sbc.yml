@@ -1,0 +1,28 @@
+- hosts: sbc
+  remote_user: caiex
+  sudo: yes
+
+  tasks:
+#  - name: rm SBC
+#    shell: chdir=/opt/apache-tomcat-7.0.63/webapps/ rm -rf SBC*
+
+#  - wait_for: path=/opt/apache-tomcat-7.0.63/webapps/SBC/WEB-INF/classes/jdbc.properties state=absent
+
+# 1.4 put on ,you can stop this
+  - name: copy war
+    copy: src=/tmp/SBC.war dest=/tmp
+
+  - name: copy SBC
+    shell: cp /tmp/SBC.war /opt/apache-tomcat-7.0.63/webapps/
+
+  - wait_for: path=/opt/apache-tomcat-7.0.63/webapps/SBC/WEB-INF/classes/jdbc.properties state=present
+
+  - name: cp
+    shell: chdir=/opt/CONF/SBC cp jdbc.properties /opt/apache-tomcat-7.0.63/webapps/SBC/WEB-INF/classes/
+
+  - name: cp
+    shell: chdir=/opt/CONF/SBC cp dubbo.properties /opt/apache-tomcat-7.0.63/webapps/SBC/WEB-INF/classes/
+
+  - name: restart tomcat
+    service: name=tomcat state=restarted sleep=5
+
