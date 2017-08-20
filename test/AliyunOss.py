@@ -3,8 +3,8 @@ import oss2
 import sys
 
 endpoint = 'http://oss-cn-beijing.aliyuncs.com'
-auth = oss2.Auth('VWIA4F2xUcVQJ8gW', 'FSXJEAXi6ug6R3BwzxRej9wPbBXDRP')
-bucket = oss2.Bucket(auth, endpoint, 'caiexdeploy')
+auth = oss2.Auth('xxx', 'xxx')
+bucket = oss2.Bucket(auth, endpoint, 'xxx')
 
 
 # -*- parameters -*-
